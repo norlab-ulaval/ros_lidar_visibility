@@ -1,0 +1,32 @@
+<launch>
+    <param name="use_sim_time" value="true"/>
+
+    <node pkg="rviz" type="rviz" name="rviz_mapper" args="-d $(find lidar_visibility)/config/rviz.rviz"/>
+
+    <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
+        <remap from="cloud_in" to="velodyne_points/pointcloud" />
+
+        <param name="min_height" value="-0.5" /> 
+        <param name="max_height" value="0.5" /> 
+        <param name="angle_min" value="-3.1415" /> 
+        <param name="angle_max" value="3.1415" /> 
+        <param name="angle_increment" value="0.01" />
+        <param name="scan_time" value="0.05" />
+
+        <param name="range_min" value="0.2" />
+        <param name="range_max" value="50" />
+
+        <param name="use_inf" value="false" />
+    </node>
+
+    <rosparam file="$(find lidar_visibility)/config/config_example.yaml" command="load" />
+    <include file="$(find lidar_visibility)/launch/transforms.launch"/>
+
+    <node pkg="lidar_visibility" type="visibility_node" name="visibility_measure" output="screen">
+        <remap from="laser_scan_in" to="/scan" />
+        <remap from="visibility_out" to="/visibility" />
+        <remap from="lambda_grid_out" to="/lambdaGrid" />
+        <remap from="occupancy_grid_out" to="/occupancyGrid" />
+    </node>
+    
+</launch>
