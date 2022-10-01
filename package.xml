@@ -2,7 +2,7 @@
 <package format="2">
   <name>lidar_visibility</name>
   <version>1.0.0</version>
-  <description>The lambda_mapper package</description>
+  <description>The lidar_visibility package</description>
 
   <maintainer email="clem.courcelle@gmail.com">Clement Courcelle</maintainer>
 
